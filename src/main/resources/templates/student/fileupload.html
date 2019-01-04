@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="studentMain/head"></head>
+	<body>
+    <div th:include="studentMain/navbar"></div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+                <div th:include="studentMain/siderbar"></div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+                            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="welcome">主页</a>
+							</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="搜索暂未开放 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								上传作业
+								<small>
+									<i class="icon-double-angle-right"></i>
+									请选择对应作业上传文件
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form action="upload" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 选择上交作业 </label>
+
+										<div class="col-sm-5">
+											<select  class="form-control" id="form-field-select-1" name="task">
+												<option th:each="task,index : ${tasksModels}" th:text="${task.getTitle()}" th:value="${task.getId()}"></option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 选择上交文件 </label>
+										<div class="col-sm-5">
+											<input type="file" name="file"/>
+										</div>
+									</div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												上传
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												取消
+											</button>
+										</div>
+									</div>
+								</form>
+
+
+							</div><!-- /.col -->
+						</div>
+
+						<div class="message-list-container">
+							<div th:each="homework,index : ${studentTasksModels}"class="message-list" id="message-list">
+								<div class="message-item message-unread">
+									<label class="inline">
+										<input type="checkbox" class="ace">
+										<span class="lbl"></span>
+									</label>
+
+									<i class="message-star icon-star orange2"></i>
+									<span th:text="${homework.getFile_name()}" ></span>
+
+								</div>
+
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+    <div th:include="studentMain/footer"></div>
+	<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+<script>
+	$(function(){
+	   $(".nav-list > li").removeClass('active')
+	   $(".studenttask").addClass('active')
+        $('.form-horizontal input[type=file]').ace_file_input({
+            style:'well',
+            btn_choose:'拖拉文件或者点击上传',
+            btn_change:null,
+            no_icon:'icon-cloud-upload',
+            droppable:true,
+            thumbnail:'large'
+        })
+	});
+</script>
+</html>

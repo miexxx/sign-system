@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="teacherMain/head"></head>
+	<body>
+    <div th:include="teacherMain/navbar"></div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+                <div th:include="teacherMain/siderbar"></div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+                            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="base">主页</a>
+							</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="搜索暂未开放 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								系统配置
+								<small>
+									<i class="icon-double-angle-right"></i>
+									请配置后开启学生登录
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 设置签到时间 </label>
+										<div class="col-sm-5">
+											<input th:value="${signtime}" type="text" name="signtime" class="col-xs-10 col-sm-5 signtime"  placeholder="请输入签到日期（HH:mm）"/>
+										</div>
+									</div>
+
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info submit" type="button">
+												<i class="icon-ok bigger-110"></i>
+												启动
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												重置
+											</button>
+										</div>
+									</div>
+								</form>
+
+
+							</div><!-- /.col -->
+						</div>
+
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+    <div th:include="teacherMain/footer"></div>
+	<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="dist/sweetalert.min.js"></script>
+<script>
+	$(function(){
+	    $(".submit").click(function(){
+	        var signtime = $(".signtime").val();
+	        $.ajax({
+                method: 'post',
+                url: 'csigntime',
+                data: {
+                    signtime: signtime
+                },
+                success: function (data) {
+                    if (typeof data === 'object') {
+                        if (data.status) {
+                            swal(data.message, '', 'success');
+                            setTimeout(function(){
+                                $(location).prop('href', '/base')
+                            }, 1000);
+
+                        } else {
+                            swal(data.message, '', 'error');
+                        }
+                    }
+                }
+            });
+        });
+	});
+</script>
+</html>

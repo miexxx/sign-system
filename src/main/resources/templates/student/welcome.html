@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="studentMain/head"></head>
+	<body>
+    <div th:include="studentMain/navbar"></div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+                <div th:include="studentMain/siderbar"></div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="搜索暂无 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								学生信息
+								<small>
+									<i class="icon-double-angle-right"></i>
+									学生可自行选择头像，头像不存储到后台
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div class="clearfix">
+									<div class="pull-left alert alert-success no-margin">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="icon-remove"></i>
+										</button>
+
+										<i class="icon-umbrella bigger-120 blue"></i>
+										同学你已经签到成功了
+									</div>
+
+								</div>
+
+								<div class="hr dotted"></div>
+
+								<div>
+									<div id="user-profile-1" class="user-profile row">
+										<div class="col-xs-12 col-sm-3 center">
+											<div>
+												<span class="profile-picture">
+													<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="avatars/profile-pic.jpg" />
+												</span>
+
+												<div class="space-4"></div>
+
+												<div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+													<div class="inline position-relative">
+														<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+															<i th:if="${SignModel.getStatus() == 0}" class="icon-circle light-green middle"></i>
+                                                            <i th:if="${SignModel.getStatus() == 1}" class="icon-circle light-red middle"></i>
+															&nbsp;
+															<span class="white">考勤状态</span>
+														</a>
+
+														<ul class="align-left dropdown-menu dropdown-caret dropdown-lighter">
+															<li class="dropdown-header"> 考勤状态</li>
+
+															<li>
+																<a href="#">
+																	<i class="icon-circle green"></i>
+																	&nbsp;
+																	<span class="green">正常</span>
+																</a>
+															</li>
+
+															<li>
+																<a href="#">
+																	<i class="icon-circle red"></i>
+																	&nbsp;
+																	<span class="red">迟到</span>
+																</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+
+											<div class="space-6"></div>
+
+											<div class="profile-contact-info">
+												<div class="profile-contact-links align-left">
+													<a class="btn btn-link" href="#">
+														<i class="icon-plus-sign bigger-120 green"></i>
+														上课不许玩手机
+													</a>
+
+													<a class="btn btn-link" href="#">
+														<i class="icon-envelope bigger-120 pink"></i>
+														作业按时完成
+													</a>
+
+													<a class="btn btn-link" href="#">
+														<i class="icon-globe bigger-125 blue"></i>
+														请假需要提前和老师说明
+													</a>
+												</div>
+
+												<div class="space-6"></div>
+
+
+											</div>
+
+											<div class="hr hr12 dotted"></div>
+
+											<div class="clearfix">
+												<div class="grid2">
+													<span th:text="${signnumber}"class="bigger-175 blue"></span>
+
+													<br />
+													签到人数
+												</div>
+
+												<div class="grid2">
+													<span th:text="${numbers-signnumber}" class="bigger-175 blue"></span>
+
+													<br />
+													缺勤人数
+												</div>
+											</div>
+
+											<div class="hr hr16 dotted"></div>
+										</div>
+
+										<div class="col-xs-12 col-sm-9">
+											<div class="center">
+												<span class="btn btn-app btn-sm btn-light no-hover">
+													<span th:text="${numbers}" class="line-height-1 bigger-170 blue">  </span>
+
+													<br />
+													<span class="line-height-1 smaller-90"> 班级人数 </span>
+												</span>
+
+											</div>
+
+											<div class="space-12"></div>
+
+											<div class="profile-user-info profile-user-info-striped">
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 学生姓名 </div>
+
+													<div class="profile-info-value">
+														<span th:text="${studentsModel.getName()}" class="editable" id="usernamee"></span>
+													</div>
+												</div>
+
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 学生学号 </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span th:text="${studentsModel.getSno()}" class="editable" id="logine"></span>
+                                                    </div>
+                                                </div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 用户班级 </div>
+
+													<div class="profile-info-value">
+														<i class="icon-map-marker light-orange bigger-110"></i>
+														<span th:text="${classesModel.getName()}" class="editable" id="countrye"></span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 电脑IP </div>
+
+													<div class="profile-info-value">
+														<span th:text="${studentsModel.getIp()}" class="editablee" id="agee"></span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 签到状态 </div>
+
+													<div class="profile-info-value">
+														<span th:if="${SignModel.getStatus() == 0}" class="editable" id="signupe">正常</span>
+                                                        <span th:if="${SignModel.getStatus() == 1}" class="editable" id="signupe">迟到</span>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="space-20"></div>
+
+											<div class="widget-box transparent">
+												<div class="widget-header widget-header-small">
+													<h4 class="blue smaller">
+														<i class="icon-rss orange"></i>
+														学生列表
+													</h4>
+
+													<div class="widget-toolbar action-buttons">
+														<a href="#" data-action="reload">
+															<i class="icon-refresh blue"></i>
+														</a>
+
+													</div>
+												</div>
+
+												<div class="widget-body">
+													<div class="widget-main padding-8">
+														<div id="profile-feed-1" class="profile-feed">
+
+															<div th:each="student,studentStat : ${students}" class="profile-activity clearfix">
+																<div>
+																	<img class="pull-left" alt="Alex Doe's avatar" src="avatars/avatar5.png" />
+																	<a th:text="${student.name}" class="user" href="#">  </a>
+																	同学
+																	<a href="#"></a>
+
+																	<div class="time">
+																		<i class="icon-time bigger-110"></i>
+                                                                        <span th:text="${classesModel.getName()}"></span>
+																	</div>
+																</div>
+
+
+															</div>
+
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="hr hr2 hr-double"></div>
+
+											<div class="space-6"></div>
+
+										</div>
+									</div>
+								</div>
+
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+    <div th:include="studentMain/footer"></div>
+	<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+</html>

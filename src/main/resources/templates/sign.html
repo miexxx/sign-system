@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>学生签到</title>
+<!-- Custom Theme files -->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--Google Fonts-->
+<link href='http://fonts.useso.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="dist/sweetalert.min.js"></script>
+<!--Google Fonts-->
+</head>
+<body>
+<div class="login">
+	<h2>登 录</h2>
+	<div class="login-top">
+		<h1>账号 密码</h1>
+		<div >
+			<input type="text" value="学号" class="sno" name ="sno" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'sno';}">
+			<input type="password" value="密码" class="password" name = "password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}">
+	    <div class="forgot">
+	    	<input type="submit" class="loginButton" value="登录" >
+	    </div>
+		</div>
+	</div>
+	<div class="login-bottom">
+		<h3>同学 &nbsp;<a href="#">不要忘记</a>&nbsp 登录签到</h3>
+	</div>
+</div>	
+<div class="copyright">
+
+</div>
+<script>
+    $(function(){
+        $(".loginButton").click(function(){
+//            swal("干得漂亮！", "你点击了按钮！","success")
+            var sno = $(".sno").val();
+            var password = $(".password").val();
+            if(sno != password)
+            {
+                swal('学号密码错误', '', 'error');
+            }
+            else {
+                $.ajax({
+                    method: 'post',
+                    url: 'sign',
+                    data: {
+                        sno: sno,
+                        password: password
+                    },
+                    success: function (data) {
+                        if (typeof data === 'object') {
+                            if (data.status) {
+                                swal(data.message, '', 'success');
+                                setTimeout(function(){
+                                    $(location).prop('href', '/welcome')
+                                }, 1000);
+
+                            } else {
+                                swal(data.message, '', 'error');
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

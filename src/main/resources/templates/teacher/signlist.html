@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="teacherMain/head"></head>
+	<body>
+    <div th:include="teacherMain/navbar"></div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+                <div th:include="teacherMain/siderbar"></div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+                            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="base">主页</a>
+							</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="搜索暂未开放 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								考勤管理
+								<small>
+									<i class="icon-double-angle-right"></i>
+									显示签到学生信息
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form action="tesignlist" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 选择班级 </label>
+
+										<div class="col-sm-5">
+											<select  class="form-control" id="form-field-select-1" name="classes">
+												<option th:each="classes,index : ${classesModels}" th:text="${classes.getName()}" th:value="${classes.getId()}"></option>
+											</select>
+										</div>
+                                        <a class="btn btn-xs btn-success searchclass" >
+                                            <i class="icon-zoom-in bigger-130"></i>
+                                        </a>
+									</div>
+								</form>
+
+
+							</div><!-- /.col -->
+							<div class="col-xs-12">
+								<div class="table-responsive">
+									<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+										<thead>
+										<tr >
+											<th class="center">
+												<label>
+													<input type="checkbox" class="ace">
+													<span class="lbl"></span>
+												</label>
+											</th>
+											<th>ID</th>
+											<th>学号</th>
+											<th>姓名</th>
+											<th>签到状态</th>
+										</tr>
+										</thead>
+
+										<tbody>
+										<tr th:each="student,index: ${studentsModels}">
+											<td class="center">
+												<label>
+													<input type="checkbox" class="ace">
+													<span class="lbl"></span>
+												</label>
+											</td>
+
+											<td th:text="${student.getId()}">
+
+											</td>
+											<td  th:text="${student.getSno()}"></td>
+
+											<td  th:text="${student.getName()}"></td>
+
+											<td th:each="sign,index :${studentSignModels}" th:if="${sign.getUser_id() == student.getId()}" >
+                                                <span th:if="${sign.getStatus() == 0}">正常</span>
+                                                <span th:if="${sign.getStatus() == 1}">迟到</span>
+                                            </td>
+
+										</tr>
+										</tbody>
+									</table>
+								</div><!-- /.table-responsive -->
+							</div><!-- /span -->
+						</div>
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+    <div th:include="teacherMain/footer"></div>
+	<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+<script src="dist/sweetalert.min.js"></script>
+<script>
+	$(function(){
+        $(".nav-list > li").removeClass('active')
+        $(".tesignlist").addClass('active')
+        $(".searchclass").click(function(){
+            var id = $('#form-field-select-1').val();
+            window.location.href="tesignlist?class_id="+id;
+        });
+        $(".delete").click(function(){
+            var id = $(this).data("id");
+            $.ajax({
+                method: 'post',
+                url: 'filedelete',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (typeof data === 'object') {
+                        if (data.status) {
+                            swal(data.message, '', 'success');
+                            setTimeout(function(){
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            swal(data.message, '', 'error');
+                        }
+                    }
+                }
+            });
+        })
+	});
+</script>
+</html>

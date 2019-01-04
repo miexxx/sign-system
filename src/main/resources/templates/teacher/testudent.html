@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="teacherMain/head"></head>
+	<body>
+    <div th:include="teacherMain/navbar"></div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+                <div th:include="teacherMain/siderbar"></div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+                            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="base">主页</a>
+							</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="搜索暂未开放 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								学生管理
+								<small>
+									<i class="icon-double-angle-right"></i>
+									请对学生进行添加
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form  class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 选择班级 </label>
+
+										<div class="col-sm-5">
+											<select  class="form-control" id="form-field-select-1" name="classes">
+												<option th:each="classes,index : ${classesModels}" th:text="${classes.getName()}" th:value="${classes.getId()}"></option>
+											</select>
+										</div>
+                                        <a class="btn btn-xs btn-success searchclass" >
+                                            <i class="icon-zoom-in bigger-130"></i>
+                                        </a>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 学号 </label>
+										<div class="col-sm-5">
+											<input class="sno col-xs-10 col-sm-5" type="text" name="sno"/>
+										</div>
+									</div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" > 姓名 </label>
+                                        <div class="col-sm-5">
+                                            <input class="name col-xs-10 col-sm-5" type="text" name="name"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" > 电脑Ip地址 </label>
+                                        <div class="col-sm-5">
+                                            <input class="ip col-xs-10 col-sm-5" type="text" name="ip"/>
+                                        </div>
+                                    </div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info add" type="button">
+												<i class="icon-ok bigger-110"></i>
+												添加
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												取消
+											</button>
+										</div>
+									</div>
+								</form>
+
+
+							</div><!-- /.col -->
+							<div class="col-xs-12">
+								<div class="table-responsive">
+									<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+										<thead>
+										<tr >
+											<th class="center">
+												<label>
+													<input type="checkbox" class="ace">
+													<span class="lbl"></span>
+												</label>
+											</th>
+											<th>ID</th>
+											<th>学号</th>
+                                            <th>姓名</th>
+											<th>电脑IP</th>
+                                            <th>删除</th>
+										</tr>
+										</thead>
+
+										<tbody>
+										<tr th:each="student,index: ${studentsModels}">
+											<td class="center">
+												<label>
+													<input type="checkbox" class="ace">
+													<span class="lbl"></span>
+												</label>
+											</td>
+
+											<td th:text="${student.getId()}">
+
+											</td>
+											<td  th:text="${student.getSno()}"></td>
+
+                                            <td  th:text="${student.getName()}"></td>
+											<td  th:text="${student.getIp()}"></td>
+											<td>
+												<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+
+
+													<button class="btn btn-xs btn-danger delete" th:data-id="${student.getId()}">
+														<i class="icon-trash bigger-120"></i>
+													</button>
+
+
+												</div>
+
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</div><!-- /.table-responsive -->
+							</div><!-- /span -->
+						</div>
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+    <div th:include="teacherMain/footer"></div>
+	<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+<script src="dist/sweetalert.min.js"></script>
+<script>
+	$(function(){
+        $(".nav-list > li").removeClass('active')
+        $(".testudent").addClass('active')
+        $(".searchclass").click(function(){
+            var id = $('#form-field-select-1').val();
+            window.location.href="testudent?class_id="+id;
+        });
+        $(".delete").click(function(){
+            var id = $(this).data("id");
+            $.ajax({
+                method: 'post',
+                url: 'studentdelete',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (typeof data === 'object') {
+                        if (data.status) {
+                            swal(data.message, '', 'success');
+                            setTimeout(function(){
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            swal(data.message, '', 'error');
+                        }
+                    }
+                }
+            });
+        });
+        $(".add").click(function(){
+            var sno = $(".sno").val();
+            var name = $(".name").val();
+            var ip = $(".ip").val();
+            var id = $('#form-field-select-1').val();
+            $.ajax({
+                method: 'post',
+                url: 'studentadd',
+                data: {
+                    sno: sno,
+                    name:name,
+                    ip:ip,
+                    id:id
+                },
+                success: function (data) {
+                    if (typeof data === 'object') {
+                        if (data.status) {
+                            swal(data.message, '', 'success');
+                            setTimeout(function(){
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            swal(data.message, '', 'error');
+                        }
+                    }
+                }
+            });
+        })
+	});
+</script>
+</html>

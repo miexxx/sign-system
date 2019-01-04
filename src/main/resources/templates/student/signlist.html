@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="studentMain/head"></head>
+	<body>
+    <div th:include="studentMain/navbar"></div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+                <div th:include="studentMain/siderbar"></div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+                            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="welcome">主页</a>
+							</li>
+
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="搜索暂未开发 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								签到列表
+								<small>
+									<i class="icon-double-angle-right"></i>
+									按照签到时间排序
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+
+								<div id="timeline-1">
+									<div class="row">
+										<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+											<div class="timeline-container">
+												<div class="timeline-label">
+													<span class="label label-primary arrowed-in-right label-lg">
+														<b>当前课堂</b>
+													</span>
+												</div>
+
+												<div class="timeline-items">
+
+													<div th:each="user,userStat : ${studentSignInfos}" class="timeline-item clearfix">
+
+														<div th:if="${user.getStudentSignModel().getStatus() == 0}" class="timeline-info">
+															<i class="timeline-indicator icon-star btn btn-warning no-hover green"></i>
+														</div>
+
+														<div th:if="${user.getStudentSignModel().getStatus() == 1}" class="timeline-info">
+															<i class="timeline-indicator icon-bug btn btn-danger no-hover"></i>
+														</div>
+
+														<div  class="widget-box transparent">
+															<div class="widget-header widget-header-small">
+																<h5 th:text="${user.getStudentsModel().getName()}" class="smaller"></h5>
+
+																<span class="widget-toolbar no-border">
+																	<i class="icon-time bigger-110"></i>
+																	<span th:text="${user.getSignTime()}" ></span>
+																</span>
+
+																<span class="widget-toolbar">
+																	<a href="#" data-action="reload">
+																		<i class="icon-refresh"></i>
+																	</a>
+
+																	<a href="#" data-action="collapse">
+																		<i class="icon-chevron-up"></i>
+																	</a>
+																</span>
+															</div>
+
+															<div class="widget-body">
+																<div class="widget-main">
+																	学号:<span th:text="${user.getStudentsModel().getSno()}"></span>
+																	<p  th:if="${user.getStudentSignModel().getStatus() == 1}">该同学已经迟到</p>
+																	<p  th:if="${user.getStudentSignModel().getStatus() == 0}">该同学考勤正常</p>
+																	<div class="space-6"></div>
+
+																	<div class="widget-toolbox clearfix">
+																		<div class="pull-right action-buttons">
+																			<div class="space-4"></div>
+
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+												</div><!-- /.timeline-items -->
+											</div><!-- /.timeline-container -->
+
+
+										</div>
+									</div>
+								</div>
+
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+
+
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+    <div th:include="studentMain/footer"></div>
+	<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+<script>
+	$(function(){
+	   $(".nav-list > li").removeClass('active')
+	   $(".studentsign").addClass('active')
+	});
+</script>
+</html>
